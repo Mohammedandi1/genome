@@ -1,0 +1,1 @@
+from . import add_some_fields

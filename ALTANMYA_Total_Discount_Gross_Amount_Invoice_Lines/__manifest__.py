@@ -1,0 +1,16 @@
+{
+    'name': 'ALTANMYA-Adds Total Discount and Gross Amount on Invoice and its Lines',
+    'version': '1.0',
+    'summary': 'ALTANMYA- Adds Total Discount and Gross Amount on Invoice and its Lines',
+    'description': "ALTANMYA- Adds Total Discount and Gross Amount on Invoice and its Lines",
+    'category': 'Accounting/Accounting',
+    'author': 'ALTANMYA - TECHNOLOGY SOLUTIONS',
+    'company': 'ALTANMYA - TECHNOLOGY SOLUTIONS Part of ALTANMYA GROUP',
+    'website': "https://tech.altanmya.net",
+    'depends': ['account_accountant'],
+    'data': [],
+    'demo': [],
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+}
