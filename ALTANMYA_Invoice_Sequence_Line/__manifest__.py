@@ -1,6 +1,6 @@
 {
     'name': 'ALTANMYA Invoice Sequence Line',
-    'version': '1.0',
+    'version': '1.0', 
     'summary': 'Invoice Sequence Line',
     'description': "Add Automatice Sequence Line for Invoice Line",
     'category': 'Accounting/Accounting',
