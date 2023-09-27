@@ -1,5 +1,5 @@
 {
-    'name': 'ALTANMYA Converting Money Into Words',
+    'name': 'ALTANMYA Converting Money Into Words', 
     'version': '1.1',
     'summary': 'Converting Money Into Words in Invoice and Accounting',
     'description': "Convert number of total price to words in arabic & english.",
