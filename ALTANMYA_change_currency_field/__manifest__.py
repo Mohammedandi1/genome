@@ -6,7 +6,9 @@
     'author': "ALTANMYA",
     'website': "https://www.tech.altanmya.net",
     'depends': ['product'],
-    'data': [ ],
+    'data': [
+        'views/product_template_view.xml',
+    ],
     'installable': True,
     'application': False,
     'auto_install': False,
