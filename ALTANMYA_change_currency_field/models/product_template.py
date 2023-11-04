@@ -6,6 +6,7 @@ class ProductTemplate(models.Model):
     currency_id = fields.Many2one(
         comodel_name='res.currency',
         string='Currency',
-        required=True,
-        store=True,
+        related=False,  # You can customize this based on your needs.
+        store=True,  # This makes the field stored.
+        readonly=True,  # You can make it read-only if needed.
     )
