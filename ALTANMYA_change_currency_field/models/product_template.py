@@ -8,5 +8,5 @@ class ProductTemplate(models.Model):
         string='Currency',
         related=False,  # You can customize this based on your needs.
         store=True,  # This makes the field stored.
-        readonly=True,  # You can make it read-only if needed.
+        readonly=False,  # You can make it read-only if needed.
     )
