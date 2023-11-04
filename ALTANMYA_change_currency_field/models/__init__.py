@@ -1,1 +1,1 @@
-from . import add_sequence
+from . import product_template
