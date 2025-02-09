@@ -66,6 +66,9 @@ class SaleOrderSpelling(models.Model):
             if self.currency_id.id == 136:
                 ar_currency_unit = 'ليرة سورية'
                 ar_currency_subunit = 'قرش'
+            elif self.currency_id.id == 90:
+                ar_currency_unit = 'دينار أردني'
+                ar_currency_subunit = 'قرش'   
             self.spelling_total_ar = self.get_spelling_num(total, lang='ar',
                                                             currency_unit=ar_currency_unit,
                                                             currency_subunit=ar_currency_subunit)
