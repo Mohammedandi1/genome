@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ###################################################################################
 #
 #    ALTANMYA - TECHNOLOGY SOLUTIONS
@@ -18,23 +17,23 @@
 #
 ###################################################################################
 {
-    'name': 'ALTANMYA Merger Purchase Order',
-    'version': '1.0',
-    'summary': 'This ALTANMYA module merges purchase order',
-    'description': "IT's Benefit when Sales Module create RFQ so You can Merge Purchase Order for the Same Vendor",
-    'author': 'ALTANMYA - TECHNOLOGY SOLUTIONS',
-    'company': 'ALTANMYA - TECHNOLOGY SOLUTIONS Part of ALTANMYA GROUP',
-    'website': "https://tech.altanmya.net",
-    'category': 'Purchases/Merge',
-    'depends': ['purchase', 'stock', 'l10n_us'],
-    'data': [
-        'security/ir.model.access.csv',
-        'wizard/merge_puchase_order_wizard_view.xml',
+    "name": "ALTANMYA Merge Purchase Order",
+    "version": "18.0.1.0.0",
+    "summary": "This ALTANMYA module merges purchase order",
+    "description": "IT's Benefit when Sales Module create RFQ so You can Merge Purchase Order for the Same Vendor",
+    "author": "ALTANMYA - TECHNOLOGY SOLUTIONS",
+    "company": "ALTANMYA - TECHNOLOGY SOLUTIONS Part of ALTANMYA GROUP",
+    "website": "https://tech.altanmya.net",
+    "category": "Purchases/Merge",
+    "depends": ["purchase", "stock", "l10n_us"],
+    "data": [
+        "security/ir.model.access.csv",
+        "wizard/merge_puchase_order_wizard_view.xml",
     ],
-    'images': [
-        'static/description/banner.jpg',
+    "images": [
+        "static/description/banner.jpg",
     ],
-    'auto_install': False,
-    'installable': True,
-    'application': False
+    "auto_install": False,
+    "installable": True,
+    "application": False,
 }
