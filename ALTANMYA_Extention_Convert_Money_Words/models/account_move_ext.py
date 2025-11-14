@@ -1,8 +1,17 @@
-import inflect
+import logging
+
 from deep_translator import GoogleTranslator
-from num2words import num2words
 
 from odoo import api, fields, models
+
+
+_logger = logging.getLogger(__name__)
+
+try:
+    from num2words import num2words
+except ImportError:
+    _logger.warning("The num2words python library is not installed, amount-to-text features won't be fully available.")
+    num2words = None
 
 
 class AccountMoveSpelling(models.Model):
@@ -12,24 +21,23 @@ class AccountMoveSpelling(models.Model):
     spelling_amount_ar = fields.Text(compute="_compute_spelling_ar", string="Spelling Arabic")
 
     def get_spelling_num(self, num: float, lang="en", currency_unit="Dollars", currency_subunit="Cents"):
+        if not num2words:
+            return ""
+
         integer_part = int(num)
-        decimal_part = round((num - integer_part), 2) * 100
-        decimal_part = int(decimal_part)
-        p = inflect.engine()
-        num_spell = ""
+        decimal_part = int(round((num - integer_part) * 100))
 
         if lang == "en":
-            integer_spell = p.number_to_words(integer_part) + " " + currency_unit
-            decimal_spell = p.number_to_words(decimal_part) + " " + currency_subunit
-            num_spell = integer_spell + " And " + decimal_spell
-            num_spell = num_spell.title()
+            integer_spell = num2words(integer_part, lang="en") + " " + currency_unit
+            decimal_spell = num2words(decimal_part, lang="en") + " " + currency_subunit
+            return f"{integer_spell} And {decimal_spell}".title()
 
         elif lang == "ar":
             integer_spell = num2words(integer_part, lang="ar") + " " + currency_unit
             decimal_spell = num2words(decimal_part, lang="ar") + " " + currency_subunit
-            num_spell = integer_spell + " و " + decimal_spell
+            return f"{integer_spell} و {decimal_spell}"
 
-        return num_spell
+        return ""
 
     @api.depends("amount_residual")
     def _compute_spelling_en(self):
@@ -37,8 +45,7 @@ class AccountMoveSpelling(models.Model):
 
         amount = 0.0
         if self.amount_residual:
-            amount = float(self.amount_residual)
-            amount = round(amount, 2)
+            amount = round(float(self.amount_residual), 2)
 
         if amount > 0:
             en_currency_unit = self.currency_id.currency_unit_label
@@ -53,8 +60,7 @@ class AccountMoveSpelling(models.Model):
 
         amount = 0.0
         if self.amount_residual:
-            amount = float(self.amount_residual)
-            amount = round(amount, 2)
+            amount = round(float(self.amount_residual), 2)
 
         if amount > 0:
             ar_currency_unit = GoogleTranslator(source="auto", target="ar").translate(
