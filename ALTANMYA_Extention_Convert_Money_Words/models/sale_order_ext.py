@@ -1,8 +1,17 @@
-import inflect
+import logging
+
 from deep_translator import GoogleTranslator
-from num2words import num2words
 
 from odoo import api, fields, models
+
+
+_logger = logging.getLogger(__name__)
+
+try:
+    from num2words import num2words
+except ImportError:
+    _logger.warning("The num2words python library is not installed, amount-to-text features won't be fully available.")
+    num2words = None
 
 
 class SaleOrderSpelling(models.Model):
@@ -17,19 +26,21 @@ class SaleOrderSpelling(models.Model):
         return False
 
     def get_spelling_num(self, num: float, lang="en", currency_unit="Dollars", currency_subunit="Cents"):
+        if not num2words:
+            return ""
+
         integer_part = int(num)
         decimal_part = int(round((num - integer_part) * 100))
-        p = inflect.engine()
 
         if lang == "en":
-            integer_spell = p.number_to_words(integer_part) + " " + currency_unit
-            decimal_spell = p.number_to_words(decimal_part) + " " + currency_subunit
-            return (integer_spell + " And " + decimal_spell).title()
+            integer_spell = num2words(integer_part, lang="en") + " " + currency_unit
+            decimal_spell = num2words(decimal_part, lang="en") + " " + currency_subunit
+            return f"{integer_spell} And {decimal_spell}".title()
 
         elif lang == "ar":
             integer_spell = num2words(integer_part, lang="ar") + " " + currency_unit
             decimal_spell = num2words(decimal_part, lang="ar") + " " + currency_subunit
-            return integer_spell + " و " + decimal_spell
+            return f"{integer_spell} و {decimal_spell}"
 
         return ""
 
