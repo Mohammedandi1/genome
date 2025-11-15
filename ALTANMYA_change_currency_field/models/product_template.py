@@ -11,4 +11,5 @@ class ProductTemplate(models.Model):
         store=True,
         readonly=False,
         required=True,
+        default=lambda self: self.env.company.currency_id,
     )
