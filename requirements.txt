@@ -1,0 +1,2 @@
+deep-translator
+num2words

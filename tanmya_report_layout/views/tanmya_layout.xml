@@ -21,46 +21,85 @@
 
     </template>
 
-    <template t-name="tanmya_external_layout">
-        <div t-attf-class="o_company_#{company.id}_layout header" t-att-style="report_header_style">
-        <div class="row">
-            <ul class="list-unstyled col-4">
-                <strong><li t-if="company.x_studio_printed_name_1st_row"><span t-field="company.x_studio_printed_name_1st_row"/></li></strong>
-                <li t-if="company.x_studio_printed_name_2nd_row"><span class="o_force_ltr" t-field="company.x_studio_printed_name_2nd_row"/></li>
-                <li t-if="company.phone">P. O. Box: <span class="o_force_ltr" t-field="company.x_studio_po_box"/></li>
-                <li t-if="company.phone">Tel: <span class="o_force_ltr" t-field="company.phone"/></li>
-                <li t-if="company.vat"><span t-field="company.x_studio_tax_term"/>: <span t-field="company.vat"/></li>
-            </ul>
-            <ul class="list-unstyled col-4">
-                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;" alt="Logo"/>
-            </ul>
-            <ul class="list-unstyled col-4">
-                <strong><li t-if="company.x_studio_printed_name_1st_row"><span t-field="company.x_studio_printed_name_1st_row"/></li></strong>
-                <li t-if="company.x_studio_printed_name_2nd_row"><span class="o_force_ltr" t-field="company.x_studio_printed_name_2nd_row"/></li>
-                <li t-if="company.phone">P. O. Box: <span class="o_force_ltr" t-field="company.x_studio_po_box"/></li>
-                <li t-if="company.phone">Tel: <span class="o_force_ltr" t-field="company.phone"/></li>
-                <li t-if="company.vat"><span t-field="company.x_studio_tax_term"/>: <span t-field="company.vat"/></li>
-            </ul>
-        </div>
-    </div>
-    <div t-attf-class="o_company_#{company.id}_layout article o_report_layout_striped {{  'o_layout_background' if company.layout_background in ['Geometric', 'Custom']  else  '' }}" t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' }});" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
-        <t t-call="web.address_layout"/>
-        <t t-out="0"/>
-    </div>
-    <div t-attf-class="o_company_#{company.id}_layout footer o_background_footer">
-        <div class="text-center">
-            <ul class="list-inline">
-                <li t-if="company.website">
-                    <span class="o_force_ltr" t-field="company.website"/>
-                </li>
-            </ul>
-            <div t-if="report_type == 'pdf'" class="text-muted">
-                    Page:
-                <span class="page"/>
-                    of
-                <span class="topage"/>
+    <template id="tanmya_external_layout">
+
+        <!-- HEADER -->
+        <div t-attf-class="header o_company_#{company.id}_layout">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+
+                <!-- LEFT SIDE -->
+                <div class="text-start">
+                    <strong t-if="company.x_studio_printed_name_1st_row">
+                        <span t-field="company.x_studio_printed_name_1st_row"/>
+                    </strong><br/>
+                    <t t-if="company.x_studio_printed_name_2nd_row">
+                        <span t-field="company.x_studio_printed_name_2nd_row"/><br/>
+                    </t>
+                    <t t-if="company.x_studio_po_box">
+                        P.O. Box: <span t-field="company.x_studio_po_box"/><br/>
+                    </t>
+                    <t t-if="company.phone">
+                        Tel: <span t-field="company.phone"/><br/>
+                    </t>
+                    <t t-if="company.vat">
+                        <span t-field="company.x_studio_tax_term"/>:
+                        <span t-field="company.vat"/>
+                    </t>
+                </div>
+
+                <!-- CENTER LOGO -->
+                <div class="text-center">
+                    <img
+                        t-if="company.logo"
+                        t-att-src="image_data_uri(company.logo)"
+                        alt="Logo"
+                        style="max-height:60px;"/>
+                </div>
+
+                <!-- RIGHT SIDE -->
+                <div class="text-end">
+                    <strong t-if="company.x_studio_printed_name_1st_row">
+                        <span t-field="company.x_studio_printed_name_1st_row"/>
+                    </strong><br/>
+                    <t t-if="company.x_studio_printed_name_2nd_row">
+                        <span t-field="company.x_studio_printed_name_2nd_row"/><br/>
+                    </t>
+                    <t t-if="company.x_studio_po_box">
+                        P.O. Box: <span t-field="company.x_studio_po_box"/><br/>
+                    </t>
+                    <t t-if="company.phone">
+                        Tel: <span t-field="company.phone"/><br/>
+                    </t>
+                    <t t-if="company.vat">
+                        <span t-field="company.x_studio_tax_term"/>:
+                        <span t-field="company.vat"/>
+                    </t>
+                </div>
             </div>
         </div>
-    </div>
+
+
+        <!-- BODY -->
+        <div
+            t-attf-class="o_company_#{company.id}_layout article o_report_layout_striped o_table_striped o_snail_mail {{'o_report_layout_background' if company.layout_background != 'Blank' else ''}}"
+            t-attf-style="{{ 'background-image: url(%s);' % layout_background_url if layout_background_url else '' }}"
+            t-att-data-oe-model="o and o._name"
+            t-att-data-oe-id="o and o.id"
+            style="min-height:80vh;"
+            t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <h2 t-out="layout_document_title"/>
+            <t t-out="0"/>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer text-center o_company_#{company.id}_layout mt-auto">
+            <div class="border-top border-bottom py-1">
+                <span t-esc="company.website or 'http://www.example.com'"/>
+            </div>
+            <div class="mt-1 text-muted">
+                Page: <span class="page"/> of <span class="topage"/>
+            </div>
+        </div>
     </template>
 </odoo>
